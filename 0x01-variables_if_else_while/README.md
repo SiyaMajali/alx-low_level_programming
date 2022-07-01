@@ -31,5 +31,11 @@
 #### 9. Patience, persistence and perspiration make an unbeatable combination for success
 + Write a program that prints all possible combinations of single-digit numbers.
 
-#### 10. 00...99
-+ Write a program that prints the numbers from 00 to 99.
+#### 100-print_comb3.c
++ Inventing is a combination of brains and materials. The more brains you use, the less material you need
+
+#### 101-print_comb4.c
++ The success combination in business is: Do what you do better... and: do more of what you do...
+
+#### 102-print_comb5.c
++ print the combinations of two two digit numbers with no repeat of either two digit number.
