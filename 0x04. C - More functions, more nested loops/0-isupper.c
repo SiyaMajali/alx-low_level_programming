@@ -1,4 +1,4 @@
-#include "coding.h"
+#include "main.h"
 
 /**
  * _isupper - function with 1 int type argument
