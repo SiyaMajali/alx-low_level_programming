@@ -1,80 +1,65 @@
-#include <stdio.h>
 #include "search_algos.h"
 
-
 /**
- * binary_help - helper function for binary search
- * @array: int
- * @start: int
- * @end: int
- * @value: int
- * Return: int
+ * exponential_search - performs exponential search
+ * @array: the integer array
+ * @size: its size
+ * @value: value to search for
+ *
+ * Return: the index found or -1
  */
-
-int binary_help(int *array, int start, int end, int value)
+int exponential_search(int *array, size_t size, int value)
 {
-	int mid, x;
+	size_t i = 1, newsize = 0;
+	int ret;
 
-	printf("Searching in array:");
-
-	for (x = start; x <= end; x++)
-		if (x == start)
-			printf(" %d", array[x]);
-		else
-			printf(", %d", array[x]);
-
-	printf("\n");
-
-
-	if ((end == start) && (value != array[start]))
+	if (!array || !size)
 		return (-1);
 
-	mid = start + ((end - start) / 2);
-
-	if (value == array[mid])
-		return (mid);
-	if (value < array[mid])
-		return (binary_help(array, start, mid - 1, value));
-	else
-		return (binary_help(array, mid + 1, end, value));
-
+	while (i < size && array[i] < value)
+	{
+		printf("Value checked array[%lu] = [%d]\n", i, array[i]);
+		i <<= 1;
+	}
+	newsize = (i >= size ? size : i + 1) - (i >> 1);
+	i >>= 1;
+	printf("Value found between indexes [%lu] and [%lu]\n",
+			i, i << 1 >= size ? size - 1 : i << 1);
+	ret = binary_search(array + i, newsize, value);
+	return (ret == -1 ? ret : ret + (int)i);
 }
 
 /**
- * exponential_search - search algo via explonent
- * @array: int
- * @size: size_t
- * @value: int
- * Return: int
+ * binary_search - performs binary search
+ * @array: the integer array
+ * @size: its size
+ * @value: value to search for
+ *
+ * Return: the index found or -1
  */
-
-int exponential_search(int *array, size_t size, int value)
+int binary_search(int *array, size_t size, int value)
 {
-	int exp, prev = 0;
+	size_t i = 0;
+	int *a = array;
 
 	if (!array)
 		return (-1);
 
-	for (exp = 1; prev <= (int)size - 1; exp = exp * 2)
+	while (size)
 	{
+		for (i = 0, printf("Searching in array: "); i < size; i++)
+			printf("%d%s", a[i], i + 1 == size ? "\n" : ", ");
 
-		if (exp >= (int)size)
-			exp = size - 1;
-
-		if (array[exp] == value)
-			return (exp);
-
-		else if (value < array[exp] || exp == (int)size - 1)
-		{
-
-			printf("Value found between indexes [%d] and [%d]\n", prev, exp);
-			return (binary_help(array, prev, exp, value));
-		}
-
+		i = (size - 1) / 2;
+		if (a[i] == value)
+			return ((a - array) + i);
+		else if (a[i] > value)
+			size = i;
 		else
-			printf("Value checked array[%d] = [%d]\n", exp, array[exp]);
-			prev = exp;
-
+		{
+			a += (i + 1);
+			size -= (i + 1);
+		}
 	}
 	return (-1);
 }
